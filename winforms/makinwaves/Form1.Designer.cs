@@ -56,16 +56,16 @@
             this.textBoxConsole = new System.Windows.Forms.TextBox();
             this.groupBoxWaves = new System.Windows.Forms.GroupBox();
             this.textBoxDutyCycle = new System.Windows.Forms.TextBox();
+            this.textBoxOffset = new System.Windows.Forms.TextBox();
             this.radioButtonGaussian = new System.Windows.Forms.RadioButton();
+            this.textBoxAmplitude = new System.Windows.Forms.TextBox();
+            this.buttonSaveWave = new System.Windows.Forms.Button();
+            this.textBoxFreq = new System.Windows.Forms.TextBox();
             this.radioButtonTriangle = new System.Windows.Forms.RadioButton();
             this.textBoxdGenLabel = new System.Windows.Forms.TextBox();
-            this.textBoxOffset = new System.Windows.Forms.TextBox();
-            this.textBoxAmplitude = new System.Windows.Forms.TextBox();
-            this.textBoxFreq = new System.Windows.Forms.TextBox();
+            this.buttonGenWave = new System.Windows.Forms.Button();
             this.radioButtonSine = new System.Windows.Forms.RadioButton();
             this.radioButtonSquare = new System.Windows.Forms.RadioButton();
-            this.buttonGenWave = new System.Windows.Forms.Button();
-            this.buttonSaveWave = new System.Windows.Forms.Button();
             this.groupBoxConnect.SuspendLayout();
             this.groupBoxFlash.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartWaveform)).BeginInit();
@@ -120,7 +120,7 @@
             this.buttonTrig.Name = "buttonTrig";
             this.buttonTrig.Size = new System.Drawing.Size(220, 115);
             this.buttonTrig.TabIndex = 8;
-            this.buttonTrig.Text = "SEND WAVE (press and hold)";
+            this.buttonTrig.Text = "PLAY WAVE (press and hold)";
             this.toolTipTrigger.SetToolTip(this.buttonTrig, "Press, Hold and then Release");
             this.buttonTrig.UseVisualStyleBackColor = false;
             this.buttonTrig.Click += new System.EventHandler(this.buttonTrig_Click_1);
@@ -360,6 +360,16 @@
             this.textBoxDutyCycle.Visible = false;
             this.textBoxDutyCycle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxDutyCycle_KeyPress);
             // 
+            // textBoxOffset
+            // 
+            this.textBoxOffset.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxOffset.Location = new System.Drawing.Point(752, 616);
+            this.textBoxOffset.Name = "textBoxOffset";
+            this.textBoxOffset.Size = new System.Drawing.Size(130, 30);
+            this.textBoxOffset.TabIndex = 46;
+            this.textBoxOffset.Text = "0";
+            this.textBoxOffset.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxOffset_KeyPress);
+            // 
             // radioButtonGaussian
             // 
             this.radioButtonGaussian.AutoSize = true;
@@ -372,6 +382,40 @@
             this.radioButtonGaussian.Text = "Gaussian";
             this.radioButtonGaussian.UseVisualStyleBackColor = true;
             this.radioButtonGaussian.CheckedChanged += new System.EventHandler(this.radioButtonGaussian_CheckedChanged);
+            // 
+            // textBoxAmplitude
+            // 
+            this.textBoxAmplitude.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxAmplitude.Location = new System.Drawing.Point(588, 616);
+            this.textBoxAmplitude.Name = "textBoxAmplitude";
+            this.textBoxAmplitude.Size = new System.Drawing.Size(130, 30);
+            this.textBoxAmplitude.TabIndex = 45;
+            this.textBoxAmplitude.Text = "4095";
+            this.textBoxAmplitude.TextChanged += new System.EventHandler(this.textBoxAmplitude_TextChanged);
+            this.textBoxAmplitude.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxAmplitude_KeyPress);
+            // 
+            // buttonSaveWave
+            // 
+            this.buttonSaveWave.BackColor = System.Drawing.Color.Gray;
+            this.buttonSaveWave.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSaveWave.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.buttonSaveWave.Location = new System.Drawing.Point(33, 575);
+            this.buttonSaveWave.Name = "buttonSaveWave";
+            this.buttonSaveWave.Size = new System.Drawing.Size(111, 111);
+            this.buttonSaveWave.TabIndex = 39;
+            this.buttonSaveWave.Text = "Save Wave";
+            this.buttonSaveWave.UseVisualStyleBackColor = false;
+            this.buttonSaveWave.Click += new System.EventHandler(this.buttonSaveWave_Click);
+            // 
+            // textBoxFreq
+            // 
+            this.textBoxFreq.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxFreq.Location = new System.Drawing.Point(440, 616);
+            this.textBoxFreq.Name = "textBoxFreq";
+            this.textBoxFreq.Size = new System.Drawing.Size(130, 30);
+            this.textBoxFreq.TabIndex = 44;
+            this.textBoxFreq.Text = "30.5";
+            this.textBoxFreq.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxFreq_KeyPress);
             // 
             // radioButtonTriangle
             // 
@@ -400,36 +444,18 @@
     "Cycle (%)";
             this.textBoxdGenLabel.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
-            // textBoxOffset
+            // buttonGenWave
             // 
-            this.textBoxOffset.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxOffset.Location = new System.Drawing.Point(752, 616);
-            this.textBoxOffset.Name = "textBoxOffset";
-            this.textBoxOffset.Size = new System.Drawing.Size(130, 30);
-            this.textBoxOffset.TabIndex = 46;
-            this.textBoxOffset.Text = "0";
-            this.textBoxOffset.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxOffset_KeyPress);
-            // 
-            // textBoxAmplitude
-            // 
-            this.textBoxAmplitude.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxAmplitude.Location = new System.Drawing.Point(588, 616);
-            this.textBoxAmplitude.Name = "textBoxAmplitude";
-            this.textBoxAmplitude.Size = new System.Drawing.Size(130, 30);
-            this.textBoxAmplitude.TabIndex = 45;
-            this.textBoxAmplitude.Text = "4095";
-            this.textBoxAmplitude.TextChanged += new System.EventHandler(this.textBoxAmplitude_TextChanged);
-            this.textBoxAmplitude.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxAmplitude_KeyPress);
-            // 
-            // textBoxFreq
-            // 
-            this.textBoxFreq.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxFreq.Location = new System.Drawing.Point(440, 616);
-            this.textBoxFreq.Name = "textBoxFreq";
-            this.textBoxFreq.Size = new System.Drawing.Size(130, 30);
-            this.textBoxFreq.TabIndex = 44;
-            this.textBoxFreq.Text = "30.5";
-            this.textBoxFreq.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxFreq_KeyPress);
+            this.buttonGenWave.BackColor = System.Drawing.Color.Gray;
+            this.buttonGenWave.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonGenWave.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.buttonGenWave.Location = new System.Drawing.Point(153, 575);
+            this.buttonGenWave.Name = "buttonGenWave";
+            this.buttonGenWave.Size = new System.Drawing.Size(111, 111);
+            this.buttonGenWave.TabIndex = 41;
+            this.buttonGenWave.Text = "Gen Wave";
+            this.buttonGenWave.UseVisualStyleBackColor = false;
+            this.buttonGenWave.Click += new System.EventHandler(this.buttonGenWave_Click);
             // 
             // radioButtonSine
             // 
@@ -455,32 +481,6 @@
             this.radioButtonSquare.Text = "Square";
             this.radioButtonSquare.UseVisualStyleBackColor = true;
             this.radioButtonSquare.CheckedChanged += new System.EventHandler(this.radioButtonSquare_CheckedChanged);
-            // 
-            // buttonGenWave
-            // 
-            this.buttonGenWave.BackColor = System.Drawing.Color.Gray;
-            this.buttonGenWave.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonGenWave.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonGenWave.Location = new System.Drawing.Point(153, 575);
-            this.buttonGenWave.Name = "buttonGenWave";
-            this.buttonGenWave.Size = new System.Drawing.Size(111, 111);
-            this.buttonGenWave.TabIndex = 41;
-            this.buttonGenWave.Text = "Gen Wave";
-            this.buttonGenWave.UseVisualStyleBackColor = false;
-            this.buttonGenWave.Click += new System.EventHandler(this.buttonGenWave_Click);
-            // 
-            // buttonSaveWave
-            // 
-            this.buttonSaveWave.BackColor = System.Drawing.Color.Gray;
-            this.buttonSaveWave.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSaveWave.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonSaveWave.Location = new System.Drawing.Point(33, 575);
-            this.buttonSaveWave.Name = "buttonSaveWave";
-            this.buttonSaveWave.Size = new System.Drawing.Size(111, 111);
-            this.buttonSaveWave.TabIndex = 39;
-            this.buttonSaveWave.Text = "Save Wave";
-            this.buttonSaveWave.UseVisualStyleBackColor = false;
-            this.buttonSaveWave.Click += new System.EventHandler(this.buttonSaveWave_Click);
             // 
             // Form1
             // 
