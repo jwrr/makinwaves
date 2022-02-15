@@ -31,8 +31,6 @@ namespace makinwave
             this.Text = this.Text.Split('-')[0];
             this.Text = this.Text.Trim();
             groupBoxFlash.Visible = false;
-            groupBoxLogo.Visible = false;
-            groupBoxLogo.Visible = false;
             groupBoxWaves.Visible = false;
             groupBoxConnect.Visible = true;
             buttonRefresh.Visible = true;
@@ -125,7 +123,6 @@ namespace makinwave
             if (success)
             {
                 groupBoxConnect.Visible = false;
-                groupBoxLogo.Visible = true;
                 groupBoxFlash.Visible = true;
                 textBoxConsole.Enabled = true;
                 textBoxConsole.AppendText("Connected to " + portName + Environment.NewLine + "=> ");
@@ -806,5 +803,9 @@ namespace makinwave
             bool success = getAvailablePorts();
         }
 
+        private void radioButtonTriangle_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

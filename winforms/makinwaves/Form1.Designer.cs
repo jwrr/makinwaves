@@ -32,10 +32,7 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.comboBoxAvailablePorts = new System.Windows.Forms.ComboBox();
-            this.commandLine = new System.Windows.Forms.TextBox();
-            this.buttonSend = new System.Windows.Forms.Button();
             this.buttonTrig = new System.Windows.Forms.Button();
             this.buttonLoad = new System.Windows.Forms.Button();
             this.buttonClear = new System.Windows.Forms.Button();
@@ -49,11 +46,8 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.chartWaveform = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.textBoxWave = new System.Windows.Forms.TextBox();
-            this.groupBoxLogo = new System.Windows.Forms.GroupBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolTipTrigger = new System.Windows.Forms.ToolTip(this.components);
-            this.groupBoxConsole = new System.Windows.Forms.GroupBox();
-            this.textBoxConsole = new System.Windows.Forms.TextBox();
             this.groupBoxWaves = new System.Windows.Forms.GroupBox();
             this.textBoxDutyCycle = new System.Windows.Forms.TextBox();
             this.textBoxOffset = new System.Windows.Forms.TextBox();
@@ -66,11 +60,15 @@
             this.buttonGenWave = new System.Windows.Forms.Button();
             this.radioButtonSine = new System.Windows.Forms.RadioButton();
             this.radioButtonSquare = new System.Windows.Forms.RadioButton();
+            this.buttonSend = new System.Windows.Forms.Button();
+            this.commandLine = new System.Windows.Forms.TextBox();
+            this.textBoxConsole = new System.Windows.Forms.TextBox();
+            this.groupBoxConsole = new System.Windows.Forms.GroupBox();
             this.groupBoxConnect.SuspendLayout();
             this.groupBoxFlash.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartWaveform)).BeginInit();
-            this.groupBoxConsole.SuspendLayout();
             this.groupBoxWaves.SuspendLayout();
+            this.groupBoxConsole.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBoxAvailablePorts
@@ -79,37 +77,10 @@
             this.comboBoxAvailablePorts.FormattingEnabled = true;
             this.comboBoxAvailablePorts.Location = new System.Drawing.Point(105, 26);
             this.comboBoxAvailablePorts.Name = "comboBoxAvailablePorts";
-            this.comboBoxAvailablePorts.Size = new System.Drawing.Size(350, 28);
+            this.comboBoxAvailablePorts.Size = new System.Drawing.Size(350, 25);
             this.comboBoxAvailablePorts.TabIndex = 0;
             this.comboBoxAvailablePorts.DropDown += new System.EventHandler(this.comboBoxAvailablePorts_DropDown);
             this.comboBoxAvailablePorts.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // commandLine
-            // 
-            this.commandLine.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.commandLine.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.commandLine.Location = new System.Drawing.Point(30, 1098);
-            this.commandLine.Name = "commandLine";
-            this.commandLine.Size = new System.Drawing.Size(1192, 30);
-            this.commandLine.TabIndex = 2;
-            this.commandLine.TextChanged += new System.EventHandler(this.commandLine_TextChanged);
-            this.commandLine.Enter += new System.EventHandler(this.commandLine_Enter);
-            this.commandLine.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.commandLine_KeyPress_1);
-            // 
-            // buttonSend
-            // 
-            this.buttonSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSend.BackColor = System.Drawing.Color.Gray;
-            this.buttonSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSend.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonSend.Location = new System.Drawing.Point(1228, 1098);
-            this.buttonSend.Name = "buttonSend";
-            this.buttonSend.Size = new System.Drawing.Size(114, 48);
-            this.buttonSend.TabIndex = 3;
-            this.buttonSend.Text = "Send";
-            this.buttonSend.UseVisualStyleBackColor = false;
-            this.buttonSend.Click += new System.EventHandler(this.buttonSend_Click);
             // 
             // buttonTrig
             // 
@@ -205,7 +176,7 @@
             this.groupBoxFlash.Controls.Add(this.buttonClear);
             this.groupBoxFlash.Location = new System.Drawing.Point(12, 3);
             this.groupBoxFlash.Name = "groupBoxFlash";
-            this.groupBoxFlash.Size = new System.Drawing.Size(636, 229);
+            this.groupBoxFlash.Size = new System.Drawing.Size(1057, 163);
             this.groupBoxFlash.TabIndex = 17;
             this.groupBoxFlash.TabStop = false;
             this.groupBoxFlash.Visible = false;
@@ -214,9 +185,9 @@
             // 
             this.checkBoxViewConsole.AutoSize = true;
             this.checkBoxViewConsole.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxViewConsole.Location = new System.Drawing.Point(180, 171);
+            this.checkBoxViewConsole.Location = new System.Drawing.Point(521, 84);
             this.checkBoxViewConsole.Name = "checkBoxViewConsole";
-            this.checkBoxViewConsole.Size = new System.Drawing.Size(155, 29);
+            this.checkBoxViewConsole.Size = new System.Drawing.Size(124, 24);
             this.checkBoxViewConsole.TabIndex = 36;
             this.checkBoxViewConsole.Text = "View Console";
             this.checkBoxViewConsole.UseVisualStyleBackColor = true;
@@ -226,9 +197,9 @@
             // 
             this.checkBoxViewWaves.AutoSize = true;
             this.checkBoxViewWaves.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxViewWaves.Location = new System.Drawing.Point(16, 171);
+            this.checkBoxViewWaves.Location = new System.Drawing.Point(521, 36);
             this.checkBoxViewWaves.Name = "checkBoxViewWaves";
-            this.checkBoxViewWaves.Size = new System.Drawing.Size(144, 29);
+            this.checkBoxViewWaves.Size = new System.Drawing.Size(114, 24);
             this.checkBoxViewWaves.TabIndex = 35;
             this.checkBoxViewWaves.Text = "View Waves";
             this.checkBoxViewWaves.UseVisualStyleBackColor = true;
@@ -239,9 +210,9 @@
             this.radioButton1.AutoSize = true;
             this.radioButton1.Checked = true;
             this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton1.Location = new System.Drawing.Point(544, 63);
+            this.radioButton1.Location = new System.Drawing.Point(691, 39);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(39, 24);
+            this.radioButton1.Size = new System.Drawing.Size(34, 21);
             this.radioButton1.TabIndex = 25;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "0";
@@ -256,14 +227,14 @@
             this.chartWaveform.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chartWaveform.Legends.Add(legend1);
-            this.chartWaveform.Location = new System.Drawing.Point(33, 51);
+            this.chartWaveform.Location = new System.Drawing.Point(16, 27);
             this.chartWaveform.Name = "chartWaveform";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chartWaveform.Series.Add(series1);
-            this.chartWaveform.Size = new System.Drawing.Size(1313, 360);
+            this.chartWaveform.Size = new System.Drawing.Size(1024, 360);
             this.chartWaveform.TabIndex = 0;
             this.chartWaveform.Text = "chart1";
             // 
@@ -271,58 +242,16 @@
             // 
             this.textBoxWave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxWave.Location = new System.Drawing.Point(33, 423);
+            this.textBoxWave.Location = new System.Drawing.Point(16, 393);
             this.textBoxWave.Multiline = true;
             this.textBoxWave.Name = "textBoxWave";
             this.textBoxWave.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxWave.Size = new System.Drawing.Size(1311, 146);
+            this.textBoxWave.Size = new System.Drawing.Size(1024, 94);
             this.textBoxWave.TabIndex = 34;
-            // 
-            // groupBoxLogo
-            // 
-            this.groupBoxLogo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBoxLogo.BackgroundImage")));
-            this.groupBoxLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.groupBoxLogo.Location = new System.Drawing.Point(6, 238);
-            this.groupBoxLogo.Name = "groupBoxLogo";
-            this.groupBoxLogo.Size = new System.Drawing.Size(642, 239);
-            this.groupBoxLogo.TabIndex = 18;
-            this.groupBoxLogo.TabStop = false;
-            this.groupBoxLogo.Visible = false;
-            this.groupBoxLogo.Enter += new System.EventHandler(this.groupBoxLogo_Enter);
             // 
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick_1);
-            // 
-            // groupBoxConsole
-            // 
-            this.groupBoxConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxConsole.Controls.Add(this.textBoxConsole);
-            this.groupBoxConsole.Controls.Add(this.commandLine);
-            this.groupBoxConsole.Controls.Add(this.buttonSend);
-            this.groupBoxConsole.Location = new System.Drawing.Point(654, 3);
-            this.groupBoxConsole.Name = "groupBoxConsole";
-            this.groupBoxConsole.Size = new System.Drawing.Size(1364, 1158);
-            this.groupBoxConsole.TabIndex = 27;
-            this.groupBoxConsole.TabStop = false;
-            this.groupBoxConsole.Text = "Console";
-            this.groupBoxConsole.Visible = false;
-            this.groupBoxConsole.Enter += new System.EventHandler(this.groupBoxConsole_Enter);
-            // 
-            // textBoxConsole
-            // 
-            this.textBoxConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxConsole.Location = new System.Drawing.Point(30, 26);
-            this.textBoxConsole.Multiline = true;
-            this.textBoxConsole.Name = "textBoxConsole";
-            this.textBoxConsole.ReadOnly = true;
-            this.textBoxConsole.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxConsole.Size = new System.Drawing.Size(1333, 1064);
-            this.textBoxConsole.TabIndex = 4;
             // 
             // groupBoxWaves
             // 
@@ -341,9 +270,9 @@
             this.groupBoxWaves.Controls.Add(this.buttonGenWave);
             this.groupBoxWaves.Controls.Add(this.radioButtonSine);
             this.groupBoxWaves.Controls.Add(this.radioButtonSquare);
-            this.groupBoxWaves.Location = new System.Drawing.Point(660, 3);
+            this.groupBoxWaves.Location = new System.Drawing.Point(12, 182);
             this.groupBoxWaves.Name = "groupBoxWaves";
-            this.groupBoxWaves.Size = new System.Drawing.Size(1358, 753);
+            this.groupBoxWaves.Size = new System.Drawing.Size(1057, 691);
             this.groupBoxWaves.TabIndex = 28;
             this.groupBoxWaves.TabStop = false;
             this.groupBoxWaves.Text = "Waves";
@@ -352,9 +281,9 @@
             // textBoxDutyCycle
             // 
             this.textBoxDutyCycle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxDutyCycle.Location = new System.Drawing.Point(911, 616);
+            this.textBoxDutyCycle.Location = new System.Drawing.Point(918, 551);
             this.textBoxDutyCycle.Name = "textBoxDutyCycle";
-            this.textBoxDutyCycle.Size = new System.Drawing.Size(146, 30);
+            this.textBoxDutyCycle.Size = new System.Drawing.Size(146, 26);
             this.textBoxDutyCycle.TabIndex = 49;
             this.textBoxDutyCycle.Text = "97";
             this.textBoxDutyCycle.Visible = false;
@@ -363,9 +292,9 @@
             // textBoxOffset
             // 
             this.textBoxOffset.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxOffset.Location = new System.Drawing.Point(752, 616);
+            this.textBoxOffset.Location = new System.Drawing.Point(759, 551);
             this.textBoxOffset.Name = "textBoxOffset";
-            this.textBoxOffset.Size = new System.Drawing.Size(130, 30);
+            this.textBoxOffset.Size = new System.Drawing.Size(130, 26);
             this.textBoxOffset.TabIndex = 46;
             this.textBoxOffset.Text = "0";
             this.textBoxOffset.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxOffset_KeyPress);
@@ -374,9 +303,9 @@
             // 
             this.radioButtonGaussian.AutoSize = true;
             this.radioButtonGaussian.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonGaussian.Location = new System.Drawing.Point(320, 717);
+            this.radioButtonGaussian.Location = new System.Drawing.Point(327, 620);
             this.radioButtonGaussian.Name = "radioButtonGaussian";
-            this.radioButtonGaussian.Size = new System.Drawing.Size(101, 24);
+            this.radioButtonGaussian.Size = new System.Drawing.Size(86, 21);
             this.radioButtonGaussian.TabIndex = 48;
             this.radioButtonGaussian.TabStop = true;
             this.radioButtonGaussian.Text = "Gaussian";
@@ -386,9 +315,9 @@
             // textBoxAmplitude
             // 
             this.textBoxAmplitude.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxAmplitude.Location = new System.Drawing.Point(588, 616);
+            this.textBoxAmplitude.Location = new System.Drawing.Point(595, 551);
             this.textBoxAmplitude.Name = "textBoxAmplitude";
-            this.textBoxAmplitude.Size = new System.Drawing.Size(130, 30);
+            this.textBoxAmplitude.Size = new System.Drawing.Size(130, 26);
             this.textBoxAmplitude.TabIndex = 45;
             this.textBoxAmplitude.Text = "4095";
             this.textBoxAmplitude.TextChanged += new System.EventHandler(this.textBoxAmplitude_TextChanged);
@@ -399,7 +328,7 @@
             this.buttonSaveWave.BackColor = System.Drawing.Color.Gray;
             this.buttonSaveWave.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonSaveWave.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonSaveWave.Location = new System.Drawing.Point(33, 575);
+            this.buttonSaveWave.Location = new System.Drawing.Point(40, 510);
             this.buttonSaveWave.Name = "buttonSaveWave";
             this.buttonSaveWave.Size = new System.Drawing.Size(111, 111);
             this.buttonSaveWave.TabIndex = 39;
@@ -410,9 +339,9 @@
             // textBoxFreq
             // 
             this.textBoxFreq.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxFreq.Location = new System.Drawing.Point(440, 616);
+            this.textBoxFreq.Location = new System.Drawing.Point(447, 551);
             this.textBoxFreq.Name = "textBoxFreq";
-            this.textBoxFreq.Size = new System.Drawing.Size(130, 30);
+            this.textBoxFreq.Size = new System.Drawing.Size(130, 26);
             this.textBoxFreq.TabIndex = 44;
             this.textBoxFreq.Text = "30.5";
             this.textBoxFreq.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxFreq_KeyPress);
@@ -421,13 +350,14 @@
             // 
             this.radioButtonTriangle.AutoSize = true;
             this.radioButtonTriangle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonTriangle.Location = new System.Drawing.Point(320, 679);
+            this.radioButtonTriangle.Location = new System.Drawing.Point(327, 593);
             this.radioButtonTriangle.Name = "radioButtonTriangle";
-            this.radioButtonTriangle.Size = new System.Drawing.Size(90, 24);
+            this.radioButtonTriangle.Size = new System.Drawing.Size(78, 21);
             this.radioButtonTriangle.TabIndex = 47;
             this.radioButtonTriangle.TabStop = true;
             this.radioButtonTriangle.Text = "Triangle";
             this.radioButtonTriangle.UseVisualStyleBackColor = true;
+            this.radioButtonTriangle.CheckedChanged += new System.EventHandler(this.radioButtonTriangle_CheckedChanged);
             // 
             // textBoxdGenLabel
             // 
@@ -435,10 +365,10 @@
             this.textBoxdGenLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxdGenLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxdGenLabel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.textBoxdGenLabel.Location = new System.Drawing.Point(320, 575);
+            this.textBoxdGenLabel.Location = new System.Drawing.Point(327, 510);
             this.textBoxdGenLabel.Name = "textBoxdGenLabel";
             this.textBoxdGenLabel.ReadOnly = true;
-            this.textBoxdGenLabel.Size = new System.Drawing.Size(782, 23);
+            this.textBoxdGenLabel.Size = new System.Drawing.Size(952, 19);
             this.textBoxdGenLabel.TabIndex = 27;
             this.textBoxdGenLabel.Text = "  Shape              Frequency       Max Ampl;itude       DC Offset         Duty " +
     "Cycle (%)";
@@ -449,7 +379,7 @@
             this.buttonGenWave.BackColor = System.Drawing.Color.Gray;
             this.buttonGenWave.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonGenWave.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonGenWave.Location = new System.Drawing.Point(153, 575);
+            this.buttonGenWave.Location = new System.Drawing.Point(160, 510);
             this.buttonGenWave.Name = "buttonGenWave";
             this.buttonGenWave.Size = new System.Drawing.Size(111, 111);
             this.buttonGenWave.TabIndex = 41;
@@ -461,9 +391,9 @@
             // 
             this.radioButtonSine.AutoSize = true;
             this.radioButtonSine.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonSine.Location = new System.Drawing.Point(320, 641);
+            this.radioButtonSine.Location = new System.Drawing.Point(327, 566);
             this.radioButtonSine.Name = "radioButtonSine";
-            this.radioButtonSine.Size = new System.Drawing.Size(63, 24);
+            this.radioButtonSine.Size = new System.Drawing.Size(54, 21);
             this.radioButtonSine.TabIndex = 43;
             this.radioButtonSine.TabStop = true;
             this.radioButtonSine.Text = "Sine";
@@ -473,24 +403,80 @@
             // 
             this.radioButtonSquare.AutoSize = true;
             this.radioButtonSquare.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonSquare.Location = new System.Drawing.Point(320, 604);
+            this.radioButtonSquare.Location = new System.Drawing.Point(327, 539);
             this.radioButtonSquare.Name = "radioButtonSquare";
-            this.radioButtonSquare.Size = new System.Drawing.Size(83, 24);
+            this.radioButtonSquare.Size = new System.Drawing.Size(72, 21);
             this.radioButtonSquare.TabIndex = 42;
             this.radioButtonSquare.TabStop = true;
             this.radioButtonSquare.Text = "Square";
             this.radioButtonSquare.UseVisualStyleBackColor = true;
             this.radioButtonSquare.CheckedChanged += new System.EventHandler(this.radioButtonSquare_CheckedChanged);
             // 
+            // buttonSend
+            // 
+            this.buttonSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSend.BackColor = System.Drawing.Color.Gray;
+            this.buttonSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSend.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.buttonSend.Location = new System.Drawing.Point(455, 1044);
+            this.buttonSend.Name = "buttonSend";
+            this.buttonSend.Size = new System.Drawing.Size(114, 48);
+            this.buttonSend.TabIndex = 3;
+            this.buttonSend.Text = "Send";
+            this.buttonSend.UseVisualStyleBackColor = false;
+            this.buttonSend.Click += new System.EventHandler(this.buttonSend_Click);
+            // 
+            // commandLine
+            // 
+            this.commandLine.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.commandLine.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.commandLine.Location = new System.Drawing.Point(30, 1044);
+            this.commandLine.Name = "commandLine";
+            this.commandLine.Size = new System.Drawing.Size(419, 26);
+            this.commandLine.TabIndex = 2;
+            this.commandLine.TextChanged += new System.EventHandler(this.commandLine_TextChanged);
+            this.commandLine.Enter += new System.EventHandler(this.commandLine_Enter);
+            this.commandLine.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.commandLine_KeyPress_1);
+            // 
+            // textBoxConsole
+            // 
+            this.textBoxConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxConsole.Location = new System.Drawing.Point(15, 17);
+            this.textBoxConsole.Multiline = true;
+            this.textBoxConsole.Name = "textBoxConsole";
+            this.textBoxConsole.ReadOnly = true;
+            this.textBoxConsole.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxConsole.Size = new System.Drawing.Size(570, 657);
+            this.textBoxConsole.TabIndex = 4;
+            // 
+            // groupBoxConsole
+            // 
+            this.groupBoxConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxConsole.Controls.Add(this.textBoxConsole);
+            this.groupBoxConsole.Controls.Add(this.commandLine);
+            this.groupBoxConsole.Controls.Add(this.buttonSend);
+            this.groupBoxConsole.Location = new System.Drawing.Point(1082, 12);
+            this.groupBoxConsole.Name = "groupBoxConsole";
+            this.groupBoxConsole.Size = new System.Drawing.Size(591, 1104);
+            this.groupBoxConsole.TabIndex = 27;
+            this.groupBoxConsole.TabStop = false;
+            this.groupBoxConsole.Text = "Console";
+            this.groupBoxConsole.Visible = false;
+            this.groupBoxConsole.Enter += new System.EventHandler(this.groupBoxConsole_Enter);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1924, 1055);
+            this.ClientSize = new System.Drawing.Size(1685, 1010);
             this.Controls.Add(this.groupBoxWaves);
             this.Controls.Add(this.groupBoxConsole);
             this.Controls.Add(this.groupBoxFlash);
-            this.Controls.Add(this.groupBoxLogo);
             this.Controls.Add(this.groupBoxConnect);
             this.Name = "Form1";
             this.Text = "MakinWaves";
@@ -499,10 +485,10 @@
             this.groupBoxFlash.ResumeLayout(false);
             this.groupBoxFlash.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartWaveform)).EndInit();
-            this.groupBoxConsole.ResumeLayout(false);
-            this.groupBoxConsole.PerformLayout();
             this.groupBoxWaves.ResumeLayout(false);
             this.groupBoxWaves.PerformLayout();
+            this.groupBoxConsole.ResumeLayout(false);
+            this.groupBoxConsole.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -510,8 +496,6 @@
         #endregion
 
         private System.Windows.Forms.ComboBox comboBoxAvailablePorts;
-        private System.Windows.Forms.TextBox commandLine;
-        private System.Windows.Forms.Button buttonSend;
         private System.Windows.Forms.Button buttonTrig;
         private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.Button buttonClear;
@@ -519,7 +503,6 @@
         private System.Windows.Forms.Button buttonConnect;
         private System.Windows.Forms.GroupBox groupBoxConnect;
         private System.Windows.Forms.GroupBox groupBoxFlash;
-        private System.Windows.Forms.GroupBox groupBoxLogo;
         private System.Windows.Forms.Button buttonRefresh;
 
         private const string G_prompt = "=>";
@@ -531,9 +514,7 @@
         private System.Windows.Forms.TextBox textBoxWave;
         private System.Windows.Forms.CheckBox checkBoxViewWaves;
         private System.Windows.Forms.CheckBox checkBoxViewConsole;
-        private System.Windows.Forms.GroupBox groupBoxConsole;
         private System.Windows.Forms.GroupBox groupBoxWaves;
-        private System.Windows.Forms.TextBox textBoxConsole;
         private System.Windows.Forms.Button buttonSaveWave;
         private System.Windows.Forms.TextBox textBoxAmplitude;
         private System.Windows.Forms.TextBox textBoxFreq;
@@ -545,6 +526,10 @@
         private System.Windows.Forms.RadioButton radioButtonTriangle;
         private System.Windows.Forms.RadioButton radioButtonGaussian;
         private System.Windows.Forms.TextBox textBoxDutyCycle;
+        private System.Windows.Forms.Button buttonSend;
+        private System.Windows.Forms.TextBox commandLine;
+        private System.Windows.Forms.TextBox textBoxConsole;
+        private System.Windows.Forms.GroupBox groupBoxConsole;
     }
 }
 
