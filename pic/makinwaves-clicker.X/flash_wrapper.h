@@ -6,6 +6,13 @@
 #ifndef FLASH_WRAPPER_H
 #define	FLASH_WRAPPER_H
 
+#define FLASH_PAGESIZE 512
+#define FLASH_WAVESIZE (FLASH_PAGESIZE/2)
+
+#define FLASH_VALID_BIT  0x00800000
+#define FLASH_CMD_FOR    4096
+#define FLASH_CMD_ENDFOR 8192
+
 uint32_t FLASH_getPageSize();
 uint32_t FLASH_getNumPages();
 uint8_t FLASH_erasePage(uint8_t PageNumber);

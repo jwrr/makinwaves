@@ -7,7 +7,7 @@
 #define	CMD_WRAPPER_H
 
 void CMD_interpreter(char *rxLine);
-void CMD_handleUSB();
+void CMD_processCommand();
 
 #endif	/* CMD_WRAPPER_H */
 

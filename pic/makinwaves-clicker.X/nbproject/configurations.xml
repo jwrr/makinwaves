@@ -38,7 +38,6 @@
       <itemPath>gpio_wrapper.h</itemPath>
       <itemPath>dac_wrapper.h</itemPath>
       <itemPath>timer_wrapper.h</itemPath>
-      <itemPath>trigger_wrapper.h</itemPath>
       <itemPath>cmd_wrapper.h</itemPath>
       <itemPath>misc_wrapper.h</itemPath>
       <itemPath>help_wrapper.h</itemPath>
@@ -84,7 +83,6 @@
       <itemPath>gpio_wrapper.c</itemPath>
       <itemPath>dac_wrapper.c</itemPath>
       <itemPath>timer_wrapper.c</itemPath>
-      <itemPath>trigger_wrapper.c</itemPath>
       <itemPath>cmd_wrapper.c</itemPath>
       <itemPath>misc_wrapper.c</itemPath>
       <itemPath>help_wrapper.c</itemPath>

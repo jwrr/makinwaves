@@ -7,8 +7,6 @@
 #ifndef MAIN_H
 #define	MAIN_H
 
-#define USB_LINELEN 255
-
 char     G_outStr[2048];
 char     G_mostRecentCommand[22] = "";
 

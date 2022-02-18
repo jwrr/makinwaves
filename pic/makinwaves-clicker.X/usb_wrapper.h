@@ -17,7 +17,7 @@ bool USB_isUp();
 uint8_t USB_print(const char *str);
 uint8_t USB_printChar(char c);
 bool USB_readLine(char line[], uint16_t maxLen, bool echo);
-uint8_t USB_flushPrintBuffer(void);
+uint8_t USB_sendPrintBuffer(void);
 void USB_printFontBits(char pixForOneLineOfChar);
 void USB_printGraphicsLineTrailer(bool showGraphics);
 void USB_printGraphicsLineHeader(bool showGraphics);
@@ -36,7 +36,7 @@ bool USB_getEchoChar(void);
 char *USB_getTmpStr(void);
 
 #define USB_LINELEN 255
-#define USB_WRITE_BUFFER_SIZE 512
+#define USB_WRITE_BUFFER_SIZE 1024
 #define USB_WRITE_MAX_TX 200
 #define USB_EOL "\n\r"
 #define USB_PROMPT USB_getPrompt()

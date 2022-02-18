@@ -225,7 +225,6 @@ namespace makinwave
 
         }
 
-
         private string[] slurpFile()
         {
             string[] lines = {};
@@ -265,51 +264,6 @@ namespace makinwave
             //Debug.WriteLine("radio not found");
             return null;
         }
-
-        private RadioButton getRadioByText(Control container, String name)
-        {
-            foreach (var c in container.Controls)
-            {
-                RadioButton r = c as RadioButton;
-                if (r != null && r.Text == name)
-                {
-                    return r;
-                }
-            }
-            return null;
-        }
-
-        private RadioButton setPrevRadio(Control container)
-        {
-            RadioButton rPrev = null;
-            RadioButton rLast = null;
-
-            foreach (var c in container.Controls)
-            {
-                RadioButton r = c as RadioButton;
-                if (r != null && r.Checked)
-                {
-                    if (rPrev != null)
-                    {
-                        rPrev.Checked = true;
-                        return rPrev;
-                    }
-                }
-                if (r != null)
-                {
-                    rPrev = r;
-                }
-
-                if (r != null)
-                {
-                    rLast = r;
-                }
-            }
-            rLast.Checked = true;
-            return rLast;
-        }
-
-
 
         private void sendChangeMode(string newMode)
         {
@@ -408,6 +362,112 @@ namespace makinwave
 
         private void PlotWaveform()
         {
+            //string[] lines = textBoxConsole.Text.Split('\n');
+            //int len = lines.Length;
+            //if (len < 2) return;
+            //textBoxWave.Text = lines[len - 2];
+
+            string[] samplesString = textBoxWave.Text.Split(',');
+            List<int> samplesInt = new List<int>();
+            int samplePrev = 0;
+            Stack<int> addrStack = new Stack<int>();
+            Stack<int> cntStack = new Stack<int>();
+
+            for (int i = 0; i < samplesString.Length; i++)
+            {
+                string sample = samplesString[i].Trim().ToUpper();
+                Debug.WriteLine(sample);
+                if (sample.Contains("REP"))
+                {
+                    String[] tokens = sample.Split();
+                    if (tokens.Length < 2)
+                    {
+                        continue;
+                    }
+                    String repCntStr = tokens[1];
+                    int repCntInt = 0;
+                    try
+                    {
+                        repCntInt = Int32.Parse(repCntStr);
+                    }
+                    catch (FormatException)
+                    {
+                        continue;
+                    }
+                    for (int j = 0; j < repCntInt; j++)
+                    {
+                        samplesInt.Add(samplePrev);
+                    }
+                    continue;
+                }
+                else if (sample.Contains("ENDFOR"))
+                {
+                    int loopAddrInt = addrStack.Pop();
+                    int loopCntInt = cntStack.Pop();
+                    Debug.WriteLine("ENDFOR1 " + loopAddrInt + " " + loopCntInt);
+                    if (loopCntInt <= 1)
+                    {
+                        continue;
+                    }
+                    i = loopAddrInt;
+                    loopCntInt--;
+                    Debug.WriteLine("ENDFOR2 " + i + " " + loopCntInt);
+                    addrStack.Push(loopAddrInt);
+                    cntStack.Push(loopCntInt);
+                    continue;
+                }
+                else if (sample.Contains("FOR"))
+                {
+                    String[] tokens = sample.Split();
+                    if (tokens.Length < 2)
+                    {
+                        continue;
+                    }
+                    String loopCntStr = tokens[1];
+                    int loopCntInt = 0;
+                    try
+                    {
+                        loopCntInt = Int32.Parse(loopCntStr);
+                    }
+                    catch (FormatException)
+                    {
+                        continue;
+                    }
+                    Debug.WriteLine("FOR " + i + " " + loopCntInt);
+                    addrStack.Push(i);
+                    if (sample.Contains("EVER"))
+                    {
+                        cntStack.Push(1); // plot just 1 iteration of forever loop
+                    }
+                    else
+                    {
+                        cntStack.Push(loopCntInt);
+                    }
+                    continue;
+                }
+                else
+                {
+                    int sampleInt;
+                    try
+                    {
+                        sampleInt = int.Parse(sample);
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                    samplesInt.Add(sampleInt);
+                    samplePrev = sampleInt;
+                }
+            }
+            chartWaveform.Series.Clear();
+            var series = new Series("Waveform");
+            series.Points.DataBindY(samplesInt);
+            chartWaveform.Series.Add(series);
+        }
+
+        private void insertWaveOpCodes()
+        {
 
             string[] lines = textBoxConsole.Text.Split('\n');
             int len = lines.Length;
@@ -416,22 +476,39 @@ namespace makinwave
 
             string[] samplesString = textBoxWave.Text.Split(',');
             List<int> samplesInt = new List<int>();
+            string outString = "";
             for (int i = 0; i < samplesString.Length; i++)
             {
+                string sample = samplesString[i].Trim();
+                int sampleInt = 0;
+
                 try
                 {
-                    samplesInt.Add(Int32.Parse(samplesString[i]));
+                    sampleInt = Int32.Parse(sample);
                 }
                 catch
                 {
-                    return;
+                    outString += sample + ", ";
+                    continue;
                 }
-            }
 
-            chartWaveform.Series.Clear();
-            var series = new Series("Waveform");
-            series.Points.DataBindY(samplesInt);
-            chartWaveform.Series.Add(series);
+                if (sampleInt == 8192)
+                {
+                    sample = "ENDLOOP";
+                }
+                else if (sampleInt >= 4096)
+                {
+                    int loopCount = sampleInt - 4096;
+                    sample = "LOOP " + loopCount;
+                }
+                else if (sampleInt < -1)
+                {
+                    int msDelay = Math.Abs(sampleInt) / 2;
+                    sample = "DELAY_MS " + msDelay;
+                }
+                outString += sample + ", ";
+            }
+            textBoxWave.Text = outString;
         }
 
         private bool readWave()
@@ -443,6 +520,7 @@ namespace makinwave
                 bool success = sendCommandLine(G_prompt);
                 if (success)
                 {
+                    insertWaveOpCodes();
                     PlotWaveform();
                 }
                 else
@@ -453,50 +531,7 @@ namespace makinwave
             return true;
         }
 
-        private void groupBoxLogo_Enter(object sender, EventArgs e)
-        {
 
-        }
-
-        private void buttonTimer_Click(object sender, EventArgs e)
-        {
-            if (timer1.Enabled)
-            {
-                timer1.Stop();
-            }
-            else
-            {
-                timer1.Start();
-            }
-        }
-
-        private void buttonStatus_Click(object sender, EventArgs e)
-        {
-            getStatus();
-        }
-
-        private void buttonTrig_KeyUp(object sender, KeyEventArgs e)
-        {
-            commandLine.Text = "f";
-            sendCommandLine(G_prompt);
-            getStatus();
-        }
-
-        private void buttonTrig_MouseUp(object sender, MouseEventArgs e)
-        {
-            timer1.Start();
-            commandLine.Text = "f";
-            sendCommandLine(G_prompt);
-            getStatus();
-        }
-
-        private void buttonTrig_MouseDown(object sender, MouseEventArgs e)
-        {
-            commandLine.Text = "f";
-            sendCommandLine(G_prompt);
-            getStatus();
-            timer1.Start();
-        }
 
         private void commandLine_Enter(object sender, EventArgs e)
         {
@@ -505,7 +540,17 @@ namespace makinwave
 
         private void buttonTrig_Click_1(object sender, EventArgs e)
         {
-
+            if (buttonTrig.Text.Contains("OFF"))
+            {
+                buttonTrig.Text = "WAVE ON (press to stop)";
+            }
+            else
+            {
+                buttonTrig.Text = "WAVE OFF (press to play)";
+            }
+            commandLine.Text = "f";
+            sendCommandLine(G_prompt);
+            getStatus();
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)

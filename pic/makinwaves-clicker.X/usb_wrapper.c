@@ -105,7 +105,7 @@ void USB_printGraphicsLineTrailer(bool showGraphics)
 }
 
 
-uint8_t USB_flushPrintBuffer(void)
+uint8_t USB_sendPrintBuffer(void)
 {
     if (USB_isUp()) {
         CDCTxService();
@@ -261,15 +261,45 @@ void USB_printWave(void)
         USB_printLine("Factory Waveform = ");
     }
     uint16_t i;
-    bool done = false;
-    for (i=0; i<1023; i++)
+    for (i=0; i<FLASH_WAVESIZE; i++)
     {
         int16_t value16 = FLASH_readSample(0, i);
-        done = (value16 == -1);
-        if (done) break;
-        USB_printf("%d, ", (int)value16);
+        
+        bool isEndWave  = (value16 == -1);
+        bool isRep      = (value16 < -1);
+        bool isForEver  = (value16 == 4096);
+        bool isFor      = (value16 >= 4096) && (value16 < 8192);
+        bool isEndFor   = (value16 == 8192);
+        
+        if (isEndWave) 
+        {
+            USB_printLine("ENDWAVE");
+            break;
+        }
+        if (isRep)
+        {
+            int16_t cnt = -1 * value16;
+            USB_printf("REP %d, ", cnt);
+        }
+        else if (isFor)
+        {
+            int16_t cnt = value16 - 4096;
+            USB_printf("FOR %d, ", cnt);
+        }
+        else if (isForEver)
+        {
+            USB_printf("FOREVER,");
+        }
+        else if (isEndFor)
+        {
+            USB_printf("ENDFOR, ");
+        }
+        else
+        {
+            USB_printf("%d, ", (int)value16);
+        }
     }
-    USB_printLine("-1");
+    
 }
 
 void USB_printWaveSize(void)
@@ -284,7 +314,7 @@ void USB_printWaveSize(void)
     }
     uint16_t i;
     bool done = false;
-    for (i=0; i<1023; i++)
+    for (i=0; i<FLASH_WAVESIZE; i++)
     {
         int16_t value16 = FLASH_readSample(0, i);
         done = (value16 == -1);

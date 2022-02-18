@@ -7,7 +7,6 @@
 #include "help_wrapper.h"
 #include "misc_wrapper.h"
 #include "timer_wrapper.h"
-#include "trigger_wrapper.h"
 #include "usb_wrapper.h"
 #include "version.h"
 
@@ -44,8 +43,8 @@ void CMD_interpreter(char *rxLine)
     else if (strcmp(trimmedCmdStr,"f") == 0      ||
              strcmp(trimmedCmdStr, "play") == 0)
     {
-        TRIG_setUSBPressed( !TRIG_isUSBPressed() );
-        if (TRIG_isUSBPressed())
+        TIME_setUSBPressed( !TIME_isUSBPressed() );
+        if (TIME_isUSBPressed())
         {
             USB_printLine("Play pressed");
         }
@@ -80,16 +79,15 @@ void CMD_interpreter(char *rxLine)
     else if (CMD_loadInProgress)
     {
         if (strcmp(trimmedCmdStr, "-1") == 0 || 
-            strcmp(trimmedCmdStr, "end") == 0)
+            strcmp(trimmedCmdStr, "endwave") == 0)
         {
             CMD_loadInProgress = false;
             FLASH_appendLoadBuffer(-1);
             uint8_t pageNumber = 0;
             uint16_t len = FLASH_getLoaddBufferLen();
-            USB_printfLine("Load Buffer final len = %d", len); 
             FLASH_writeLoadBuffer(pageNumber);
             len = FLASH_getLoaddBufferLen();
-            USB_printfLine("Waveform uploaded to flash memory (len=%d)", len);
+            USB_printLine("Wave is in flash");
             USB_printWaveSize();
         }
         else if (isInteger(trimmedCmdStr))
@@ -102,35 +100,49 @@ void CMD_interpreter(char *rxLine)
             int16_t loadValue = (int16_t)strtol(trimmedCmdStr, NULL, 0);
             FLASH_appendLoadBuffer((uint32_t)loadValue);
         }
-        else if (strncmp(trimmedCmdStr, "delay_ms", 8) == 0)
+        else if (strncmp(trimmedCmdStr, "rep", 3) == 0)
         {
             uint16_t len = strlen(trimmedCmdStr);
-            if (len > 8+1)
+            if (len > 3+1)
             {
-                int16_t delayInMsec = (int16_t)strtol(trimmedCmdStr+9, NULL, 10);
-                int16_t delayIn500usec = 2 * delayInMsec;
-                int16_t delayNegative = -1 * delayIn500usec;
-                FLASH_appendLoadBuffer((uint32_t)delayNegative);
-                USB_printfLine("Value %d written to Flash", delayNegative);
+                int16_t repCnt = (int16_t)strtol(trimmedCmdStr+3+1, NULL, 10);
+                int16_t repCntNegative = -1 * repCnt;
+                FLASH_appendLoadBuffer((uint32_t)repCntNegative);
+                USB_printfLine("REP %d", repCnt);
             }
         }
-        else if (strncmp(trimmedCmdStr, "loop", 4) == 0)
+        else if (strcmp(trimmedCmdStr, "forever") == 0)
+        {
+            FLASH_appendLoadBuffer(FLASH_CMD_FOR);
+            USB_printLine("FOREVER");
+        }
+        else if (strncmp(trimmedCmdStr, "for", 3) == 0)
         {
             uint16_t len = strlen(trimmedCmdStr);
-            if (len > 4+1)
+            if (len > 3+1)
             {
-                int16_t loopCnt = (int16_t)strtol(trimmedCmdStr+5, NULL, 10);
+                int32_t loopCnt = (int32_t)strtol(trimmedCmdStr+3+1, NULL, 10);
                 loopCnt = clamp(loopCnt, 0, 4095);
-                FLASH_appendStartLoop((uint32_t)loopCnt);
-                USB_printfLine("Start loop of %d written to flash", loopCnt);
+                FLASH_appendLoadBuffer(FLASH_CMD_FOR + loopCnt);
+                USB_printfLine("FOR %d", (int16_t)loopCnt);
             }
         }
-        else if (strcmp(trimmedCmdStr, "endloop") == 0)
+        else if (strcmp(trimmedCmdStr, "endfor") == 0)
         {
             FLASH_appendEndLoop();
-            USB_printLine("End loop written to flash");
+            USB_printLine("ENDFOR");
         }
     } // CMD_loadInProgress
+    else if (strncmp(trimmedCmdStr, "freq", 4) == 0)
+    {
+        uint16_t len = strlen(trimmedCmdStr);
+        if (len > 4+1)
+        {
+            int16_t freq = (int16_t)strtol(trimmedCmdStr+5, NULL, 10);
+            TIME_setFreq(freq);
+            USB_printfLine("Sample frequency changed to %d", freq);
+        }            
+    }
     else if (strcmp(trimmedCmdStr, "r") == 0  ||
              strcmp(trimmedCmdStr, "read") == 0) // read wave
     {
@@ -145,7 +157,7 @@ void CMD_interpreter(char *rxLine)
 
 #define CMD_rxLineLen  256
 static char CMD_rxLine[CMD_rxLineLen];
-void CMD_handleUSB()
+void CMD_processCommand()
 {
     bool eoln = USB_readLine(CMD_rxLine, CMD_rxLineLen, USB_getEchoChar());
     if (eoln) {

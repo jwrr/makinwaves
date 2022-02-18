@@ -11,12 +11,8 @@
 
 void TMR3_callBack(void);
 
-bool TIME_isTimeMonitorEnabled(void);
-void TIME_enableTimeMonitor(bool newVal);
-
 void TIME_clearCount();
 uint16_t TIME_getCnt500usec();
-
 
 void TIME_setPeriod(uint16_t newPeriod);
 void TIME_setFreq(double newFreqInHz);
@@ -24,8 +20,9 @@ uint16_t TIME_getPeriod(void);
 void TIME_setCounter(uint16_t newCnt);
 uint16_t TIME_getCounter(void);
 uint16_t TIME_getCurrentSampleIndex(void);
-void TIME_interp();
 
+bool TIME_isUSBPressed(void);
+void TIME_setUSBPressed(bool newVal);
 
 #endif	/* TIMER_WRAPPER_H */
 

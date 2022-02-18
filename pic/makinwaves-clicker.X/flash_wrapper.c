@@ -26,10 +26,6 @@
 #include "factory_defaults.h"
 
 static const uint8_t FLASH_flashNumPages = 10;
-static const uint16_t FLASH_flashPageSize = 256;
-static const uint32_t FLASH_validBit     = 0x00800000;
-static const uint32_t FLASH_startLoopBit = 0x00001000;
-static const uint32_t FLASH_endLoopBit   = 0x00002000;
 
 // Allocate and reserve pages of flash.  The compiler/linker will reserve this for data and not place any code here.
 static __prog__  uint8_t flashPage0[FLASH_ERASE_PAGE_SIZE_IN_PC_UNITS] __attribute__((space(prog),aligned(FLASH_ERASE_PAGE_SIZE_IN_PC_UNITS)));
@@ -41,11 +37,6 @@ static uint32_t FLASH_getPageAddress(uint32_t flashPageNumber)
     case 0:  return FLASH_GetErasePageAddress((uint32_t)&flashPage0[0]);
     }
     return 0;
-}
-
-uint32_t FLASH_getPageSize()
-{
-    return FLASH_flashPageSize;
 }
 
 uint32_t FLASH_getNumPages()
@@ -82,8 +73,7 @@ uint8_t FLASH_writePage(int32_t writeData[], uint32_t dataSize, uint8_t pageNumb
         return errorCode;
     }
   
-    uint32_t pageSize = FLASH_getPageSize();
-    dataSize = (dataSize < pageSize) ? dataSize : pageSize;
+    dataSize = (dataSize < FLASH_PAGESIZE) ? dataSize : FLASH_PAGESIZE;
     uint32_t iii = 0;
 //    for (flashOffset= 0U; flashOffset< FLASH_ERASE_PAGE_SIZE_IN_PC_UNITS; flashOffset += 4U)
     uint32_t flashOffset;
@@ -105,9 +95,8 @@ uint8_t FLASH_writePage(int32_t writeData[], uint32_t dataSize, uint8_t pageNumb
 
 int32_t FLASH_readFromPage(uint8_t pageNumber, uint16_t pageOffset)
 {
-    const uint16_t pageSize = FLASH_getPageSize();
     pageOffset *= 2;
-    if (pageOffset > pageSize) return -1;
+    if (pageOffset > FLASH_PAGESIZE) return -1;
     const uint32_t flashPageBaseAddress = FLASH_getPageAddress(pageNumber);
     if (flashPageBaseAddress == 0) return -1;
     const uint32_t flashAddress = flashPageBaseAddress + pageOffset;
@@ -119,7 +108,7 @@ bool FLASH_isValid(int8_t pageNumber, uint16_t pageOffset)
 {
     // value must be between 0x10000 and 0x17fff)
     uint32_t value = FLASH_readFromPage(pageNumber, pageOffset);
-    uint32_t minFlashValue = FLASH_validBit;
+    uint32_t minFlashValue = FLASH_VALID_BIT;
     uint32_t maxFlashValue = minFlashValue + 0xffff;
     bool valid = (minFlashValue <= value) && (value <= maxFlashValue);
     return valid;
@@ -159,22 +148,21 @@ int32_t FLASH_read32(uint8_t pageNumber, uint16_t pageOffset)
 bool FLASH_isStartLoop(int8_t pageNumber, uint16_t pageOffset)
 {
     int32_t val32 = FLASH_read32(pageNumber, pageOffset);
-    bool isStartLoop = (val32 & 0xF000) == FLASH_startLoopBit;
+    bool isStartLoop = (val32 & 0xF000) == FLASH_CMD_FOR;
     return isStartLoop;
 }
 
 bool FLASH_isEndLoop(int8_t pageNumber, uint16_t pageOffset)
 {
     int32_t val32 = FLASH_read32(pageNumber, pageOffset);
-    bool isEndLoop = (val32 & 0xF000) == FLASH_endLoopBit;
+    bool isEndLoop = (val32 & 0xF000) == FLASH_CMD_ENDFOR;
     return isEndLoop;
 }
 
 int32_t FLASH_read(uint32_t flashOffset)
 {
-    const uint16_t pageSize = FLASH_getPageSize();
-    const uint8_t pageNumber = flashOffset / pageSize;
-    const uint16_t pageOffset = 2 * (flashOffset % pageSize);
+    const uint8_t pageNumber = flashOffset / FLASH_PAGESIZE;
+    const uint16_t pageOffset = 2 * (flashOffset % FLASH_PAGESIZE);
     int32_t readData = FLASH_readFromPage(pageNumber, pageOffset);
     return readData;
 }
@@ -184,7 +172,7 @@ uint8_t FLASH_verify(const int32_t dataTable[], uint16_t len, uint8_t pageNumber
     int32_t flashRdata;
     uint16_t failCnt = 0;
     uint16_t i = 0;
-    uint16_t pageBase = pageNumber * FLASH_getPageSize();
+    uint16_t pageBase = pageNumber * FLASH_PAGESIZE;
     for (; i < len; i++)
     {
         int raddr = pageBase + i;
@@ -211,8 +199,7 @@ uint8_t FLASH_verify(const int32_t dataTable[], uint16_t len, uint8_t pageNumber
 
 uint8_t FLASH_test()
 {
-    const uint32_t pageSize = FLASH_getPageSize();
-    int32_t testData[pageSize];
+    int32_t testData[FLASH_PAGESIZE];
 
 
     int pageNumber = 0;
@@ -220,11 +207,11 @@ uint8_t FLASH_test()
     for (; pageNumber<9; pageNumber++)
     {
         int i;
-        for (i=0; i < pageSize; i++)
+        for (i=0; i < FLASH_PAGESIZE; i++)
         {
-            testData[i] = (pageNumber*pageSize + i) | FLASH_validBit;
+            testData[i] = (pageNumber*FLASH_PAGESIZE + i) | FLASH_VALID_BIT;
         }
-        err = FLASH_writePage(testData, pageSize, pageNumber);
+        err = FLASH_writePage(testData, FLASH_PAGESIZE, pageNumber);
         if (err)
         {
             USB_printfLinePrompt("FLASH WRITE ERROR #%d", err);
@@ -236,11 +223,11 @@ uint8_t FLASH_test()
     for (pageNumber=0; pageNumber<9; pageNumber++)
     {
         int i;
-        for (i=0; i < pageSize; i++)
+        for (i=0; i < FLASH_PAGESIZE; i++)
         {
-            testData[i] = (pageNumber*pageSize + i) | FLASH_validBit;
+            testData[i] = (pageNumber*FLASH_PAGESIZE + i) | FLASH_VALID_BIT;
         }
-        err = FLASH_verify(testData, pageSize, pageNumber);
+        err = FLASH_verify(testData, FLASH_PAGESIZE, pageNumber);
         if (err)
         {
             USB_printLinePrompt("FLASH READ Test failed");
@@ -258,11 +245,11 @@ uint8_t FLASH_test()
             return 3;
         }
         int i;
-        for (i=0; i < pageSize; i++)
+        for (i=0; i < FLASH_PAGESIZE; i++)
         {
             testData[i] = 0x00ffffff;
         }
-        err = FLASH_verify(testData, pageSize, pageNumber);
+        err = FLASH_verify(testData, FLASH_PAGESIZE, pageNumber);
         if (err)
         {
             USB_printLinePrompt("FLASH ERASE failed");
@@ -294,19 +281,19 @@ void FLASH_clearLoadBuffer()
 
 uint16_t FLASH_appendLoadBuffer(uint32_t value)
 {
-    FLASH_loadBuffer[FLASH_indexLoadBuffer++] = (value | FLASH_validBit);
+    FLASH_loadBuffer[FLASH_indexLoadBuffer++] = (value | FLASH_VALID_BIT);
     return FLASH_indexLoadBuffer;
 }
 
 uint16_t FLASH_appendStartLoop(uint16_t loopCnt)
 {
-    FLASH_loadBuffer[FLASH_indexLoadBuffer++] = (loopCnt | FLASH_startLoopBit);
+    FLASH_loadBuffer[FLASH_indexLoadBuffer++] = (loopCnt | FLASH_CMD_FOR);
     return FLASH_indexLoadBuffer;
 }
 
 uint16_t FLASH_appendEndLoop(void)
 {
-    FLASH_loadBuffer[FLASH_indexLoadBuffer++] = FLASH_endLoopBit;
+    FLASH_loadBuffer[FLASH_indexLoadBuffer++] = FLASH_CMD_ENDFOR;
     return FLASH_indexLoadBuffer;
 }
 
